@@ -12,6 +12,29 @@ export default class FormEmployee extends Component {
         this.submitForm = this.submitForm.bind(this);
       }
 
+      const config = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.state),
+      };
+
+      const url = "http://campus-bordeaux.ovh:3001/api/quests/employees/";
+      fetch(url, config)
+  .then(res => res.json())
+    .then(res => {
+      if (res.error) {
+        alert(res.error);
+      } else {
+        alert(`Added employee with the ID ${res}!`);
+      }
+
+    }).catch(e => {
+      console.error(e);
+      alert('Error during l\'an employee addition');
+    });
+
       onChange(e) {
         this.setState({
           [e.target.name]: e.target.value,
