@@ -1,29 +1,29 @@
 import React, { Component } from 'react'
 
 export default class FormEmployee extends Component {
-    //part1
+//part1
     constructor(props) {
         super(props);
         this.state = {
-          lastname: '',
-          firstname: '',
-          email: '',
+          name: '',
+          poster: '',
+          comment: '',
         }
         this.onChange = this.onChange.bind(this);
         this.submitForm = this.submitForm.bind(this);
       }
       
 
-    //part1
+//part1
       onChange(e) {
         this.setState({
           [e.target.name]: e.target.value,
         });
        }
-    //part1
+//part1
        submitForm = e => {
         e.preventDefault();
-        //part2
+//part2
       const config = {
         method: "POST",
         headers: {
@@ -31,83 +31,86 @@ export default class FormEmployee extends Component {
         },
         body: JSON.stringify(this.state),
       };
-      //part2
-      const url = "http://campus-bordeaux.ovh:3001/api/quests/employees/";
-      //added
+//part2
+      const url = " http://campus-bordeaux.ovh:3001/api/quests/movies/";
+//added
       if (
-        this.state.firstname === "" ||
-        this.state.lastname === "" ||
-        this.state.email === "" 
+        this.state.name === "" ||
+        this.state.poster === "" ||
+        this.state.comment === "" 
       ) {
         alert("Please fill all the fields")
       } else {
-      //part2     
+//part2     
       fetch(url, config)
         .then(res => res.json())
         .then(res => {
             if (res.error) {
               alert(res.error);
             } else {
-              alert(`Added employee with the ID ${res}!`);
+              alert(`Added film with the ID ${res}!`);
             }
           })
           .catch(e => {
             console.error(e);
-            alert('Error during l\'an employee addition');
+            alert('Error during l\'an film addition');
           });
-          //added 
+//added 
           this.setState({
-            firstname: "",
-            lastname: "",
-            email: ""
+            name: "",
+            poster: "",
+            comment: ""
           })
         }
       }
       
   render() {
     return (
-      //part1
-      <div className="FormEmployee">
-          <h1> employee’s entry</h1>
+//part1
+      <div className="FormFilm">
+          <h1> Film entry </h1>
 
           <form onSubmit={this.submitForm}>
             <fieldset>
-              <legend>Information</legend>
+              <legend>Favorite Film Information</legend>
               <div className="form-data">
-                <label htmlFor="lastname">Nom</label>
+                <label htmlFor="name">Film: </label>
                 <input
                   type="text"
-                  id="lastname"
-                  name="lastname"
+                  placeholder= "What is your favorite film's name?"
+                  id="name"
+                  name="name"
                   onChange={this.onChange}
-                  value={this.state.lastname}
+                  value={this.state.name}
                 />
               </div>
 
               <div className="form-data">
-                <label htmlFor="firstname">Prénom</label>
+                <label htmlFor="poster">Poster: </label>
                 <input
-                  type="text"
-                  id="firstname"
-                  name="firstname"
+                  type="url"
+                  placeholder= "What is the poster's URL?"
+                  id="poster"
+                  name="poster"
                   onChange={this.onChange}
-                  value={this.state.firstname}
+                  value={this.state.poster}
                 />
               </div>
 
               <div className="form-data">
-                <label htmlFor="email">E-mail</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
+                <label htmlFor="comment">Comment: </label>
+                <textarea
+                  type="text"
+                  placeholder= "What do you think of this film?"
+                  id="comment"
+                  name="comment"
                   onChange={this.onChange}
-                  value={this.state.email}
+                  value={this.state.comment}
                 />
               </div>
               <hr />
               <div className="form-data">
-                <input type="submit" value="Envoyer" />
+                <input type="submit" value="Send" />
               </div>
             </fieldset>
           </form>
